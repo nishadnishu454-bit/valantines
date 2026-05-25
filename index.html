@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Nishu & Rinuh | Forever ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        :root{
+            --blue1:#020817;
+            --blue2:#07142c;
+            --blue3:#0b1f42;
+            --cyan:#7fdfff;
+            --pink:#ff5ca8;
+            --white:#ffffff;
+        }
+
+        body{
+            font-family:'Inter',sans-serif;
+            background:linear-gradient(to bottom,var(--blue1),var(--blue2),#01050d);
+            overflow-x:hidden;
+            color:white;
+            position:relative;
+        }
+
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
+            background:
+            radial-gradient(circle at top left, rgba(0,174,255,.15), transparent 30%),
+            radial-gradient(circle at bottom right, rgba(255,92,168,.15), transparent 30%);
+            z-index:-3;
+        }
+
+        .stars{
+            position:fixed;
+            inset:0;
+            overflow:hidden;
+            z-index:-2;
+        }
+
+        .star{
+            position:absolute;
+            width:2px;
+            height:2px;
+            background:white;
+            border-radius:50%;
+            animation:twinkle 4s infinite;
+        }
+
+        @keyframes twinkle{
+            0%,100%{
+                opacity:.2;
+            }
+            50%{
+                opacity:1;
+            }
+        }
+
+        .glow{
+            position:fixed;
+            width:700px;
+            height:700px;
+            background:radial-gradient(circle, rgba(0,174,255,.15), transparent 70%);
+            filter:blur(80px);
+            z-index:-1;
+            animation:moveGlow 10s infinite alternate;
+        }
+
+        @keyframes moveGlow{
+            from{
+                transform:translate(-100px,-50px);
+            }
+            to{
+                transform:translate(150px,100px);
+            }
+        }
+
+        .hearts{
+            position:fixed;
+            inset:0;
+            pointer-events:none;
+            overflow:hidden;
+            z-index:1;
+        }
+
+        .heart{
+            position:absolute;
+            bottom:-20px;
+            color:#7fdfff;
+            animation:floatHeart linear forwards;
+        }
+
+        @keyframes floatHeart{
+            to{
+                transform:translateY(-110vh);
+                opacity:0;
+            }
+        }
+
+        #rifu-overlay{
+            position:fixed;
+            inset:0;
+            background:#020817;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            z-index:99999;
+            transition:1.5s;
+        }
+
+        .rifu-title{
+            font-family:'Dancing Script',cursive;
+            font-size:clamp(3rem,8vw,6rem);
+            background:linear-gradient(90deg,#7fdfff,#ff5ca8,#ffffff);
+            background-size:200%;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            animation:shine 4s linear infinite;
+            text-align:center;
+        }
+
+        @keyframes shine{
+            to{
+                background-position:200%;
+            }
+        }
+
+        .start-btn{
+            margin-top:30px;
+            padding:18px 40px;
+            border:none;
+            border-radius:50px;
+            background:linear-gradient(135deg,#0ea5ff,#ff5ca8);
+            color:white;
+            font-size:1rem;
+            font-weight:bold;
+            cursor:pointer;
+            transition:.4s;
+            box-shadow:0 0 30px rgba(0,174,255,.4);
+        }
+
+        .start-btn:hover{
+            transform:scale(1.08);
+        }
+
+        #main-content{
+            opacity:0;
+            transition:1s;
+        }
+
+        #main-content.visible{
+            opacity:1;
+        }
+
+        .container{
+            width:92%;
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .hero{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            text-align:center;
+        }
+
+        .subtitle{
+            color:#9fdcff;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            margin-bottom:20px;
+        }
+
+        .hero h1{
+            font-size:clamp(2.8rem,7vw,5.5rem);
+            font-family:'Playfair Display',serif;
+            background:linear-gradient(90deg,#7fdfff,#fff,#ffb6d9);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .big-counter{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+            gap:20px;
+            width:100%;
+            margin-top:35px;
+        }
+
+        .count-box{
+            background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,255,255,.1);
+            padding:30px;
+            border-radius:25px;
+            backdrop-filter:blur(20px);
+            box-shadow:0 15px 40px rgba(0,0,0,.5);
+        }
+
+        .c-val{
+            font-size:3rem;
+            font-weight:bold;
+            display:block;
+        }
+
+        .c-lbl{
+            color:#9fdcff;
+            letter-spacing:2px;
+        }
+
+        .sec-title{
+            text-align:center;
+            font-size:3rem;
+            margin-top:80px;
+            margin-bottom:60px;
+            font-family:'Playfair Display',serif;
+            background:linear-gradient(90deg,#7fdfff,#ffb6d9);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .photo-track{
+            overflow:hidden;
+            width:100%;
+            padding:40px 0;
+        }
+
+        .photo-slider{
+            display:flex;
+            gap:30px;
+            width:max-content;
+            animation:scrollPhotos 45s linear infinite;
+        }
+
+        @keyframes scrollPhotos{
+            from{
+                transform:translateX(0);
+            }
+            to{
+                transform:translateX(-50%);
+            }
+        }
+
+        .photo-card{
+            width:320px;
+            height:450px;
+            border-radius:30px;
+            overflow:hidden;
+            flex-shrink:0;
+            position:relative;
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(255,255,255,.1);
+            backdrop-filter:blur(20px);
+            transition:.5s;
+            box-shadow:0 15px 40px rgba(0,0,0,.5);
+        }
+
+        .photo-card:hover{
+            transform:translateY(-12px) scale(1.03);
+        }
+
+        .photo-card img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .photo-card::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:linear-gradient(to top, rgba(0,0,0,.5), transparent 50%);
+        }
+
+        .quotes{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:25px;
+            margin-top:50px;
+        }
+
+        .quote-card{
+            background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:25px;
+            padding:30px;
+            backdrop-filter:blur(15px);
+            transition:.4s;
+        }
+
+        .quote-card:hover{
+            transform:translateY(-10px);
+            box-shadow:0 0 35px rgba(0,174,255,.4);
+        }
+
+        .quote-card h3{
+            color:#7fdfff;
+            margin-bottom:15px;
+        }
+
+        .quote-card p{
+            line-height:1.8;
+            color:#dceeff;
+        }
+
+        .magic-buttons{
+            text-align:center;
+            margin:100px auto;
+        }
+
+        .magic-btn{
+            padding:18px 30px;
+            margin:12px;
+            border:none;
+            border-radius:50px;
+            background:linear-gradient(135deg,#0ea5ff,#ff5ca8);
+            color:white;
+            font-weight:bold;
+            cursor:pointer;
+            transition:.4s;
+            box-shadow:0 0 30px rgba(0,174,255,.4);
+        }
+
+        .magic-btn:hover{
+            transform:translateY(-6px) scale(1.05);
+        }
+
+        .game-box{
+            width:100%;
+            max-width:700px;
+            height:300px;
+            margin:40px auto;
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:25px;
+            position:relative;
+            overflow:hidden;
+            backdrop-filter:blur(15px);
+        }
+
+        #movingHeart{
+            position:absolute;
+            font-size:3rem;
+            cursor:pointer;
+        }
+
+        #scoreText{
+            text-align:center;
+            color:#7fdfff;
+            font-size:1.5rem;
+        }
+
+        .memory-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+            gap:18px;
+            max-width:850px;
+            margin:auto;
+        }
+
+        .memory-card{
+            position:relative;
+            width:100%;
+            aspect-ratio:1/1;
+            transform-style:preserve-3d;
+            transition:.6s;
+            cursor:pointer;
+        }
+
+        .memory-card.flip{
+            transform:rotateY(180deg);
+        }
+
+        .memory-front,
+        .memory-back{
+            position:absolute;
+            width:100%;
+            height:100%;
+            border-radius:20px;
+            overflow:hidden;
+            backface-visibility:hidden;
+        }
+
+        .memory-front{
+            background:linear-gradient(135deg,#0ea5ff,#ff5ca8);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:2rem;
+        }
+
+        .memory-back{
+            transform:rotateY(180deg);
+        }
+
+        .memory-back img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+
+        .memory-card.matched{
+            animation:glowMatch 1s infinite alternate;
+        }
+
+        @keyframes glowMatch{
+            from{
+                box-shadow:0 0 10px rgba(127,223,255,.4);
+            }
+            to{
+                box-shadow:0 0 30px rgba(255,92,168,.8);
+            }
+        }
+
+        .magic-modal{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.8);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            opacity:0;
+            visibility:hidden;
+            transition:.4s;
+            z-index:99999;
+        }
+
+        .magic-modal.active{
+            opacity:1;
+            visibility:visible;
+        }
+
+        .magic-content{
+            width:90%;
+            max-width:500px;
+            padding:40px;
+            border-radius:30px;
+            background:rgba(255,255,255,.08);
+            border:1px solid rgba(255,255,255,.1);
+            backdrop-filter:blur(20px);
+            text-align:center;
+        }
+
+        #magicText{
+            line-height:1.8;
+            color:#dceeff;
+            margin-bottom:20px;
+            font-size:1.2rem;
+        }
+
+        #popup-love{
+            position:fixed;
+            bottom:25px;
+            right:25px;
+            padding:18px 22px;
+            background:rgba(255,255,255,.08);
+            border:1px solid rgba(255,255,255,.1);
+            backdrop-filter:blur(12px);
+            border-radius:20px;
+            opacity:0;
+            transition:.5s;
+            z-index:9999;
+        }
+
+        @media(max-width:768px){
+
+            .photo-card{
+                width:250px;
+                height:360px;
+            }
+
+            .sec-title{
+                font-size:2.2rem;
+            }
+
+        }
+
+
+
+.hero-section{
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at top left,#3a0d2f 0%,transparent 30%),
+    radial-gradient(circle at bottom right,#1d274d 0%,transparent 35%),
+    linear-gradient(180deg,#070b1d,#130717,#05050d);
+}
+
+/* GLOW EFFECTS */
+
+.bg-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.35;
+    animation:floatGlow 10s ease-in-out infinite;
+}
+
+.glow1{
+    width:400px;
+    height:400px;
+    background:#ff4d8d;
+    top:-100px;
+    left:-100px;
+}
+
+.glow2{
+    width:500px;
+    height:500px;
+    background:#5f8cff;
+    bottom:-150px;
+    right:-120px;
+    animation-delay:2s;
+}
+
+.glow3{
+    width:300px;
+    height:300px;
+    background:#ffb6d9;
+    top:40%;
+    left:40%;
+    animation-delay:4s;
+}
+
+@keyframes floatGlow{
+    0%{
+        transform:translateY(0px) translateX(0px);
+    }
+    50%{
+        transform:translateY(-30px) translateX(20px);
+    }
+    100%{
+        transform:translateY(0px) translateX(0px);
+    }
+}
+
+/* PARTICLES */
+
+.particles::before,
+.particles::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image:
+    radial-gradient(#ff5e9f 1.5px,transparent 1.5px),
+    radial-gradient(#ffd79c 1px,transparent 1px),
+    radial-gradient(#6ca7ff 1.5px,transparent 1.5px);
+
+    background-size:
+    120px 120px,
+    180px 180px,
+    150px 150px;
+
+    animation:moveParticles 20s linear infinite;
+    opacity:.5;
+}
+
+.particles::after{
+    animation-duration:35s;
+    opacity:.3;
+}
+
+@keyframes moveParticles{
+    from{
+        transform:translateY(0px);
+    }
+    to{
+        transform:translateY(-200px);
+    }
+}
+
+/* CONTENT */
+
+.hero-content{
+    width:90%;
+    max-width:1200px;
+    text-align:center;
+    position:relative;
+    z-index:10;
+}
+
+.top-text{
+    color:#ff4d8d;
+    letter-spacing:10px;
+    font-size:.95rem;
+    margin-bottom:20px;
+    font-family:'Inter',sans-serif;
+}
+
+.main-title{
+    font-size:clamp(3rem,8vw,6rem);
+    line-height:1.1;
+    font-family:'Playfair Display',serif;
+    color:#f6d38d;
+    margin-bottom:60px;
+    text-shadow:
+    0 0 15px rgba(246,211,141,.15),
+    0 0 30px rgba(255,77,141,.15);
+}
+
+/* COUNTER */
+
+.counter-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:25px;
+    margin-bottom:60px;
+}
+
+.counter-box{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border-radius:30px;
+    padding:50px 20px;
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.counter-box::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.06),
+    transparent
+    );
+    opacity:0;
+    transition:.4s;
+}
+
+.counter-box:hover::before{
+    opacity:1;
+}
+
+.counter-box:hover{
+    transform:translateY(-8px) scale(1.03);
+    box-shadow:
+    0 0 25px rgba(255,77,141,.15),
+    0 0 50px rgba(92,133,255,.12);
+}
+
+.count{
+    display:block;
+    font-size:5rem;
+    font-weight:700;
+    font-family:'Playfair Display',serif;
+    color:white;
+    margin-bottom:15px;
+}
+
+.counter-box p{
+    color:#d7b0bf;
+    letter-spacing:5px;
+    font-size:1rem;
+}
+
+/* BOTTOM */
+
+.bottom-text{
+    color:#ff4d8d;
+    letter-spacing:8px;
+    font-size:1rem;
+    margin-top:20px;
+    text-transform:uppercase;
+    animation:pulseText 2s ease-in-out infinite;
+}
+
+@keyframes pulseText{
+    0%{
+        opacity:.6;
+    }
+    50%{
+        opacity:1;
+    }
+    100%{
+        opacity:.6;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .counter-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .count{
+        font-size:3.5rem;
+    }
+
+    .counter-box{
+        padding:35px 15px;
+    }
+
+    .main-title{
+        margin-bottom:40px;
+    }
+
+    .bottom-text{
+        letter-spacing:4px;
+        font-size:.9rem;
+    }
+
+}
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- AUDIO -->
+
+    <audio id="bg-music" loop>
+        <source src="music/AUDIO.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- EFFECTS -->
+
+    <div class="stars"></div>
+
+    <div class="glow"></div>
+
+    <div class="hearts"></div>
+
+    <!-- OVERLAY -->
+
+    <div id="rifu-overlay">
+
+        <h1 class="rifu-title">
+            Nishu ❤️ Rinuh
+        </h1>
+
+        <button class="start-btn" onclick="startExperience()">
+            Start Our Love Story ✨
+        </button>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div id="main-content">
+
+        <!-- HERO -->
+
+       <!-- HERO SECTION -->
+<div class="hero-section">
+
+    <!-- Floating Glow -->
+    <div class="bg-glow glow1"></div>
+    <div class="bg-glow glow2"></div>
+    <div class="bg-glow glow3"></div>
+
+    <!-- Particles -->
+    <div class="particles"></div>
+
+    <div class="hero-content">
+
+        <p class="top-text">MY UNIVERSE</p>
+
+        <h1 class="main-title">
+            Since May 8, 2025
+        </h1>
+
+        <div class="counter-grid">
+
+            <div class="counter-box">
+                <span id="d" class="count">382</span>
+                <p>DAYS</p>
+            </div>
+
+            <div class="counter-box">
+                <span id="h" class="count">10</span>
+                <p>HOURS</p>
+            </div>
+
+            <div class="counter-box">
+                <span id="m" class="count">54</span>
+                <p>MINUTES</p>
+            </div>
+
+            <div class="counter-box">
+                <span id="s" class="count">15</span>
+                <p>SECONDS</p>
+            </div>
+
+        </div>
+
+        <p class="bottom-text">
+            EVERY SECOND WITH YOU COUNTS.
+        </p>
+
+    </div>
+</div>
+
+
+        <!-- PHOTOS -->
+
+        <div class="container">
+
+            <h2 class="sec-title">
+                Our Beautiful Memories 💙
+            </h2>
+
+        </div>
+
+        <div class="photo-track">
+
+            <div class="photo-slider">
+
+                <!-- EXISTING IMAGES -->
+
+                <div class="photo-card"><img src="images/img1.jpeg"></div>
+                <div class="photo-card"><img src="images/img2.jpeg"></div>
+                <div class="photo-card"><img src="images/img3.jpeg"></div>
+                <div class="photo-card"><img src="images/img4.jpeg"></div>
+                <div class="photo-card"><img src="images/img5.jpeg"></div>
+                <div class="photo-card"><img src="images/img6.jpeg"></div>
+                <div class="photo-card"><img src="images/img7.jpeg"></div>
+                <div class="photo-card"><img src="images/img9.jpeg"></div>
+
+                <!-- DUPLICATE -->
+
+                <div class="photo-card"><img src="images/img1.jpeg"></div>
+                <div class="photo-card"><img src="images/img2.jpeg"></div>
+                <div class="photo-card"><img src="images/img3.jpeg"></div>
+                <div class="photo-card"><img src="images/img4.jpeg"></div>
+                <div class="photo-card"><img src="images/img5.jpeg"></div>
+                <div class="photo-card"><img src="images/img6.jpeg"></div>
+                <div class="photo-card"><img src="images/img7.jpeg"></div>
+                <div class="photo-card"><img src="images/img9.jpeg"></div>
+
+            </div>
+
+        </div>
+
+        <!-- QUOTES -->
+
+        <div class="container">
+
+            <h2 class="sec-title">
+                Why I Love You 💖
+            </h2>
+
+            <div class="quotes">
+
+                <div class="quote-card">
+                    <h3>Your Smile 😊</h3>
+                    <p>Your smile can fix every bad day in my life.</p>
+                </div>
+
+                <div class="quote-card">
+                    <h3>Your Eyes ✨</h3>
+                    <p>I can stare at your eyes forever and still never get bored.</p>
+                </div>
+
+                <div class="quote-card">
+                    <h3>Your Presence 🌌</h3>
+                    <p>Even silence feels beautiful when you are beside me.</p>
+                </div>
+
+                <div class="quote-card">
+                    <h3>Your Love ❤️</h3>
+                    <p>You are my peace, happiness and favorite person.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+
+        <div class="magic-buttons">
+
+            <button class="magic-btn" onclick="openMagic('hug')">
+                Send Hug 🤍
+            </button>
+
+            <button class="magic-btn" onclick="openMagic('kiss')">
+                Send Kiss 💋
+            </button>
+
+            <button class="magic-btn" onclick="openMagic('love')">
+                Love Message ❤️
+            </button>
+
+            <button class="magic-btn" onclick="openMagic('secret')">
+                Secret 💌
+            </button>
+
+        </div>
+
+        <!-- GAME -->
+
+        <div class="container">
+
+            <h2 class="sec-title">
+                Catch My Love 💙
+            </h2>
+
+            <div class="game-box" id="gameArea">
+
+                <div id="movingHeart">💙</div>
+
+            </div>
+
+            <h2 id="scoreText">
+                Score : 0 ❤️
+            </h2>
+
+        </div>
+
+        <!-- MEMORY GAME -->
+
+        <div class="container">
+
+            <h2 class="sec-title">
+                Our Memory Game 🧠❤️
+            </h2>
+
+            <div style="
+                display:flex;
+                justify-content:center;
+                gap:30px;
+                flex-wrap:wrap;
+                margin-bottom:30px;
+                color:#7fdfff;
+            ">
+                <div>Moves : <span id="moves">0</span></div>
+                <div>Matches : <span id="matches">0</span>/8</div>
+            </div>
+
+            <div class="memory-grid" id="memoryGrid"></div>
+
+        </div>
+
+    </div>
+
+    <!-- POPUP -->
+
+    <div id="popup-love"></div>
+
+    <!-- MODALS -->
+
+    <div class="magic-modal" id="magicModal">
+
+        <div class="magic-content">
+
+            <div id="magicText"></div>
+
+            <button class="magic-btn" onclick="closeMagic()">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="magic-modal" id="memoryWinModal">
+
+        <div class="magic-content">
+
+            <h2 style="margin-bottom:20px; color:#7fdfff;">
+                You Won ❤️
+            </h2>
+
+            <p style="line-height:1.8; margin-bottom:20px;">
+                🥺 You unlocked all our beautiful memories.<br>
+                Forever with you is my favorite place 💙
+            </p>
+
+            <button class="magic-btn" onclick="closeMemoryWin()">
+                Close ✨
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        // START EXPERIENCE
+
+        function startExperience(){
+
+            document.getElementById("rifu-overlay").style.opacity="0";
+
+            setTimeout(()=>{
+                document.getElementById("rifu-overlay").style.display="none";
+            },1500);
+
+            document.getElementById("main-content")
+            .classList.add("visible");
+
+            const music=document.getElementById("bg-music");
+
+            music.volume=0.5;
+
+            music.play();
+
+            confetti({
+                particleCount:300,
+                spread:180
+            });
+
+        }
+
+        // TIMER
+
+        const start=new Date("2025-05-08T00:00:00");
+
+        setInterval(()=>{
+
+            const now=new Date();
+
+            const diff=now-start;
+
+            document.getElementById("d").innerText=
+            Math.floor(diff/86400000);
+
+            document.getElementById("h").innerText=
+            Math.floor((diff%86400000)/3600000);
+
+            document.getElementById("m").innerText=
+            Math.floor((diff%3600000)/60000);
+
+            document.getElementById("s").innerText=
+            Math.floor((diff%60000)/1000);
+
+        },1000);
+
+        // POPUPS
+
+        const messages=[
+            "❤️ You are my favorite person.",
+            "💙 Forever isn't enough with you.",
+            "✨ Every heartbeat reminds me of you.",
+            "🥺 You are my peace.",
+            "💋 I fall for you every day.",
+            "🌌 You are my safe place."
+        ];
+
+        setInterval(()=>{
+
+            const popup=document.getElementById("popup-love");
+
+            popup.innerHTML=
+            messages[Math.floor(Math.random()*messages.length)];
+
+            popup.style.opacity="1";
+
+            setTimeout(()=>{
+                popup.style.opacity="0";
+            },4000);
+
+        },7000);
+
+        // HEARTS
+
+        setInterval(()=>{
+
+            const heart=document.createElement("div");
+
+            heart.classList.add("heart");
+
+            heart.innerHTML="💙";
+
+            heart.style.left=Math.random()*100+"vw";
+
+            heart.style.fontSize=
+            (Math.random()*20+15)+"px";
+
+            heart.style.animationDuration=
+            (Math.random()*4+4)+"s";
+
+            document.querySelector(".hearts")
+            .appendChild(heart);
+
+            setTimeout(()=>{
+                heart.remove();
+            },8000);
+
+        },400);
+
+        // STARS
+
+        for(let i=0;i<120;i++){
+
+            const star=document.createElement("div");
+
+            star.classList.add("star");
+
+            star.style.left=Math.random()*100+"vw";
+
+            star.style.top=Math.random()*100+"vh";
+
+            star.style.animationDuration=
+            (Math.random()*3+2)+"s";
+
+            document.querySelector(".stars")
+            .appendChild(star);
+
+        }
+
+        // MAGIC BUTTONS
+
+        function openMagic(type){
+
+            const modal=document.getElementById("magicModal");
+
+            const text=document.getElementById("magicText");
+
+            if(type==="hug"){
+                text.innerHTML=
+                "🤍 If I hug you once, I’ll never want to let go.";
+            }
+
+            if(type==="kiss"){
+                text.innerHTML=
+                "💋 A million kisses for the prettiest girl in my universe.";
+            }
+
+            if(type==="love"){
+                text.innerHTML=
+                "❤️ You are the reason my life feels magical every day.";
+            }
+
+            if(type==="secret"){
+                text.innerHTML=
+                "💌 Rinuoo... I Love Youuhh Forever 😘";
+            }
+
+            modal.classList.add("active");
+
+            confetti({
+                particleCount:120,
+                spread:90
+            });
+
+        }
+
+        function closeMagic(){
+
+            document.getElementById("magicModal")
+            .classList.remove("active");
+
+        }
+
+        // CATCH MY LOVE GAME
+
+        let score=0;
+
+        const heart=document.getElementById("movingHeart");
+
+        function moveHeart(){
+
+            const game=document.getElementById("gameArea");
+
+            const x=Math.random()*(game.clientWidth-60);
+
+            const y=Math.random()*(game.clientHeight-60);
+
+            heart.style.left=x+"px";
+
+            heart.style.top=y+"px";
+
+        }
+
+        heart.addEventListener("click",()=>{
+
+            score++;
+
+            document.getElementById("scoreText")
+            .innerHTML="Score : "+score+" ❤️";
+
+            moveHeart();
+
+            confetti({
+                particleCount:40,
+                spread:50
+            });
+
+        });
+
+        moveHeart();
+
+        // MEMORY GAME
+
+        const memoryImages=[
+
+            "images/img1.jpeg",
+            "images/img2.jpeg",
+            "images/img3.jpeg",
+            "images/img4.jpeg",
+            "images/img5.jpeg",
+            "images/img6.jpeg",
+            "images/img7.jpeg",
+            "images/img9.jpeg"
+
+        ];
+
+        let gameImages=[...memoryImages,...memoryImages];
+
+        gameImages.sort(()=>Math.random()-0.5);
+
+        const memoryGrid=document.getElementById("memoryGrid");
+
+        let firstCard=null;
+        let secondCard=null;
+
+        let lockBoard=false;
+
+        let moves=0;
+        let matches=0;
+
+        gameImages.forEach((img)=>{
+
+            const card=document.createElement("div");
+
+            card.classList.add("memory-card");
+
+            card.dataset.image=img;
+
+            card.innerHTML=`
+
+                <div class="memory-front">
+                    💙
+                </div>
+
+                <div class="memory-back">
+                    <img src="${img}">
+                </div>
+
+            `;
+
+            card.addEventListener("click",flipCard);
+
+            memoryGrid.appendChild(card);
+
+        });
+
+        function flipCard(){
+
+            if(lockBoard) return;
+
+            if(this===firstCard) return;
+
+            this.classList.add("flip");
+
+            if(!firstCard){
+
+                firstCard=this;
+                return;
+
+            }
+
+            secondCard=this;
+
+            moves++;
+
+            document.getElementById("moves")
+            .innerText=moves;
+
+            checkMatch();
+
+        }
+
+        function checkMatch(){
+
+            const isMatch=
+            firstCard.dataset.image===
+            secondCard.dataset.image;
+
+            if(isMatch){
+
+                disableCards();
+
+            }else{
+
+                unflipCards();
+
+            }
+
+        }
+
+        function disableCards(){
+
+            firstCard.classList.add("matched");
+
+            secondCard.classList.add("matched");
+
+            matches++;
+
+            document.getElementById("matches")
+            .innerText=matches;
+
+            confetti({
+                particleCount:50,
+                spread:70
+            });
+
+            resetBoard();
+
+            if(matches===8){
+
+                setTimeout(()=>{
+
+                    document.getElementById("memoryWinModal")
+                    .classList.add("active");
+
+                    confetti({
+                        particleCount:400,
+                        spread:180
+                    });
+
+                },700);
+
+            }
+
+        }
+
+        function unflipCards(){
+
+            lockBoard=true;
+
+            setTimeout(()=>{
+
+                firstCard.classList.remove("flip");
+
+                secondCard.classList.remove("flip");
+
+                resetBoard();
+
+            },1000);
+
+        }
+
+        function resetBoard(){
+
+            [firstCard,secondCard]=[null,null];
+
+            lockBoard=false;
+
+        }
+
+        function closeMemoryWin(){
+
+            document.getElementById("memoryWinModal")
+            .classList.remove("active");
+
+        }
+
+    </script>
+
+</body>
+
+</html>
